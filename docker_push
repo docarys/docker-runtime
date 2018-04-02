@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+docker tag docarys:latest $DOCKER_USERNAME/docarys:$DOCARYS_SHORT_VERSION
+docker tag docarys:latest $DOCKER_USERNAME/docarys:$DOCARYS_VERSION
+docker images
+docker push $DOCKER_USERNAME/docarys:$DOCARYS_SHORT_VERSION
+docker push $DOCKER_USERNAME/docarys:$DOCARYS_VERSION
+
+if [ "$LATEST" = true ] 
+then
+    docker tag docarys:latest $DOCKER_USERNAME/docarys:latest
+    docker push $DOCKER_USERNAME/docarys:latest
+fi

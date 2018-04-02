@@ -1,0 +1,16 @@
+sudo: required
+language: node_js
+services:
+  - docker
+
+env:
+  - $DOCARYS_VERSION=$(npm show docarys version) $DOCARYS_SHORT_VERSION=${DOCARYS_VERSION:0:1} $LATEST=true
+
+script:
+  - docker build -t docarys:latest .
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
